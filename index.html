@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+
+<title>Narburger Cartoon Studio</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  margin:0;
+  background:#080808;
+  color:#fff;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(8,8,8,.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid #242424;
+  padding:16px;
+}
+
+.headerInner{
+  max-width:850px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  font-weight:900;
+  font-size:20px;
+}
+
+.brand span{
+  color:#e42525;
+}
+
+.version{
+  font-size:12px;
+  background:#1d1d1d;
+  padding:7px 10px;
+  border-radius:20px;
+  color:#aaa;
+}
+
+main{
+  max-width:850px;
+  margin:auto;
+  padding:22px 16px 70px;
+}
+
+.hero{
+  margin-bottom:25px;
+}
+
+.hero h1{
+  font-size:34px;
+  line-height:1.05;
+  margin:0 0 10px;
+}
+
+.hero p{
+  color:#999;
+  line-height:1.5;
+  margin:0;
+}
+
+.card{
+  background:#121212;
+  border:1px solid #252525;
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:16px;
+}
+
+.cardTitle{
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:13px;
+  color:#ddd;
+}
+
+.upload{
+  border:2px dashed #393939;
+  border-radius:18px;
+  padding:25px 15px;
+  text-align:center;
+  cursor:pointer;
+}
+
+.uploadIcon{
+  font-size:35px;
+  margin-bottom:8px;
+}
+
+.upload strong{
+  display:block;
+  margin-bottom:5px;
+}
+
+.upload small{
+  color:#888;
+}
+
+#photoInput{
+  display:none;
+}
+
+.preview{
+  display:none;
+  margin-top:15px;
+  position:relative;
+  overflow:hidden;
+  border-radius:18px;
+  background:#000;
+}
+
+.preview img{
+  width:100%;
+  max-height:380px;
+  object-fit:contain;
+  display:block;
+}
+
+textarea{
+  width:100%;
+  min-height:110px;
+  resize:none;
+  border:1px solid #333;
+  background:#090909;
+  color:white;
+  padding:15px;
+  border-radius:14px;
+  font-size:16px;
+  outline:none;
+}
+
+textarea:focus{
+  border-color:#e42525;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.option{
+  border:1px solid #333;
+  background:#0c0c0c;
+  padding:14px 10px;
+  border-radius:14px;
+  text-align:center;
+  cursor:pointer;
+  font-weight:700;
+  transition:.15s;
+}
+
+.option.active{
+  background:#e42525;
+  border-color:#e42525;
+}
+
+.duration{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.duration button{
+  border:1px solid #333;
+  background:#0c0c0c;
+  color:white;
+  border-radius:14px;
+  padding:14px;
+  font-weight:800;
+  font-size:15px;
+}
+
+.duration button.active{
+  background:#e42525;
+  border-color:#e42525;
+}
+
+select{
+  width:100%;
+  border:1px solid #333;
+  background:#090909;
+  color:white;
+  padding:15px;
+  border-radius:14px;
+  font-size:16px;
+}
+
+.toggleRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 0;
+}
+
+.switch{
+  position:relative;
+  width:52px;
+  height:30px;
+}
+
+.switch input{
+  display:none;
+}
+
+.slider{
+  position:absolute;
+  inset:0;
+  background:#333;
+  border-radius:30px;
+  transition:.2s;
+}
+
+.slider:before{
+  content:"";
+  position:absolute;
+  width:24px;
+  height:24px;
+  left:3px;
+  top:3px;
+  border-radius:50%;
+  background:white;
+  transition:.2s;
+}
+
+.switch input:checked + .slider{
+  background:#e42525;
+}
+
+.switch input:checked + .slider:before{
+  transform:translateX(22px);
+}
+
+.generate{
+  width:100%;
+  border:0;
+  border-radius:18px;
+  padding:18px;
+  font-size:18px;
+  font-weight:900;
+  color:white;
+  background:linear-gradient(135deg,#e42525,#a90000);
+  box-shadow:0 10px 30px rgba(228,37,37,.22);
+}
+
+.generate:active{
+  transform:scale(.98);
+}
+
+.result{
+  display:none;
+}
+
+.videoBox{
+  width:100%;
+  max-width:390px;
+  aspect-ratio:9/16;
+  margin:15px auto;
+  background:
+    radial-gradient(circle at 50% 30%,#441010,#080808 65%);
+  border-radius:22px;
+  overflow:hidden;
+  position:relative;
+  border:1px solid #333;
+}
+
+.videoPhoto{
+  position:absolute;
+  width:82%;
+  left:9%;
+  top:23%;
+  border-radius:18px;
+  animation:burgerZoom 3s ease-in-out infinite alternate;
+}
+
+@keyframes burgerZoom{
+  from{
+    transform:scale(.9) rotate(-2deg);
+  }
+  to{
+    transform:scale(1.05) rotate(2deg);
+  }
+}
+
+.videoText{
+  position:absolute;
+  width:90%;
+  left:5%;
+  top:8%;
+  text-align:center;
+  font-size:25px;
+  font-weight:1000;
+  text-shadow:0 3px 12px #000;
+  animation:textPop 1.2s ease infinite alternate;
+}
+
+@keyframes textPop{
+  from{
+    transform:scale(.95);
+  }
+  to{
+    transform:scale(1.05);
+  }
+}
+
+.cartoonBubble{
+  position:absolute;
+  bottom:16%;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  color:#111;
+  padding:12px 18px;
+  border-radius:20px;
+  font-weight:900;
+  white-space:nowrap;
+  box-shadow:0 8px 25px rgba(0,0,0,.5);
+}
+
+.bottomLogo{
+  position:absolute;
+  bottom:5%;
+  width:100%;
+  text-align:center;
+  font-size:24px;
+  font-weight:1000;
+}
+
+.bottomLogo span{
+  color:#e42525;
+}
+
+.status{
+  text-align:center;
+  color:#999;
+  font-size:14px;
+  margin-top:12px;
+}
+
+.steps{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin-top:15px;
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  background:#333;
+  border-radius:50%;
+}
+
+.dot.active{
+  background:#e42525;
+}
+
+@media(min-width:700px){
+  .options{
+    grid-template-columns:repeat(4,1fr);
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="headerInner">
+    <div class="brand">
+      🍔 <span>Narburger</span> Cartoon Studio
+    </div>
+    <div class="version">V1</div>
+  </div>
+</header>
+
+<main>
+
+<div class="hero">
+  <h1>Fotoğrafını<br>harekete geçir. 🎬</h1>
+  <p>
+    Ürün fotoğrafını yükle, tarzını ve müziğini seç.
+    Narburger için Reels videosunu hazırla.
+  </p>
+</div>
+
+<div class="card">
+  <div class="cardTitle">1 · ÜRÜN FOTOĞRAFI</div>
+
+  <label class="upload" for="photoInput">
+    <div class="uploadIcon">📸</div>
+    <strong>Fotoğraf Seç</strong>
+    <small>iPhone / iPad Fotoğraflar uygulamasından</small>
+  </label>
+
+  <input
+    type="file"
+    id="photoInput"
+    accept="image/*"
+  >
+
+  <div class="preview" id="preview">
+    <img id="previewImage">
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="cardTitle">2 · KAMPANYA / VİDEO METNİ</div>
+
+  <textarea
+    id="campaign"
+    placeholder="Örnek: Online siparişe özel! 2. Narburger %50 indirimli. Sadece Tat."
+  ></textarea>
+</div>
+
+
+<div class="card">
+  <div class="cardTitle">3 · VİDEO TARZI</div>
+
+  <div class="options" id="styles">
+
+    <div class="option active" data-value="cartoon">
+      🎨<br>Çizgi Film
+    </div>
+
+    <div class="option" data-value="3d">
+      🧊<br>3D
+    </div>
+
+    <div class="option" data-value="retro">
+      🇺🇸<br>Retro
+    </div>
+
+    <div class="option" data-value="realistic">
+      📷<br>Gerçekçi
+    </div>
+
+  </div>
+</div>
+
+
+<div class="card">
+  <div class="cardTitle">4 · VİDEO SÜRESİ</div>
+
+  <div class="duration">
+
+    <button class="active" data-duration="15">
+      15 sn
+    </button>
+
+    <button data-duration="30">
+      30 sn
+    </button>
+
+    <button data-duration="60">
+      60 sn
+    </button>
+
+  </div>
+</div>
+
+
+<div class="card">
+
+  <div class="cardTitle">5 · MÜZİK</div>
+
+  <select id="music">
+    <option value="energetic">⚡ Enerjik</option>
+    <option value="rock">🎸 Rock</option>
+    <option value="retro">📻 Amerikan Retro</option>
+    <option value="funk">🕺 Funk</option>
+    <option value="cinematic">🎬 Sinematik</option>
+    <option value="none">🔇 Müzik Yok</option>
+  </select>
+
+</div>
+
+
+<div class="card">
+
+  <div class="toggleRow">
+
+    <div>
+      <strong>Otomatik Animasyon</strong><br>
+      <small style="color:#777">
+        Zoom, hareket ve yazı efektleri
+      </small>
+    </div>
+
+    <label class="switch">
+      <input id="animation" type="checkbox" checked>
+      <span class="slider"></span>
+    </label>
+
+  </div>
+
+  <div class="toggleRow">
+
+    <div>
+      <strong>Altyazı</strong><br>
+      <small style="color:#777">
+        Kampanya metnini videoda göster
+      </small>
+    </div>
+
+    <label class="switch">
+      <input id="subtitle" type="checkbox" checked>
+      <span class="slider"></span>
+    </label>
+
+  </div>
+
+</div>
+
+
+<button class="generate" id="generate">
+  ✨ VİDEO OLUŞTUR
+</button>
+
+
+<div class="result card" id="result">
+
+  <div class="cardTitle">
+    VİDEO ÖNİZLEME · 9:16
+  </div>
+
+  <div class="videoBox">
+
+    <div class="videoText" id="videoText">
+      NARBURGER
+    </div>
+
+    <img class="videoPhoto" id="videoPhoto">
+
+    <div class="cartoonBubble" id="bubble">
+      🍔 Sadece Tat!
+    </div>
+
+    <div class="bottomLogo">
+      <span>nar</span>burger
+    </div>
+
+  </div>
+
+  <div class="steps">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="status" id="status">
+    Çizgi-film animasyon önizlemesi hazır.
+  </div>
+
+</div>
+
+</main>
+
+
+<script>
+
+let selectedStyle = "cartoon";
+let selectedDuration = 15;
+let imageData = "";
+
+
+/* FOTOĞRAF */
+
+const photoInput =
+document.getElementById("photoInput");
+
+photoInput.addEventListener("change",function(){
+
+  const file = this.files[0];
+
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+
+    imageData = e.target.result;
+
+    document.getElementById("previewImage").src =
+    imageData;
+
+    document.getElementById("preview").style.display =
+    "block";
+
+  };
+
+  reader.readAsDataURL(file);
+
+});
+
+
+/* TARZ */
+
+document.querySelectorAll("#styles .option")
+.forEach(option => {
+
+  option.addEventListener("click",function(){
+
+    document.querySelectorAll("#styles .option")
+    .forEach(x => x.classList.remove("active"));
+
+    this.classList.add("active");
+
+    selectedStyle =
+    this.dataset.value;
+
+  });
+
+});
+
+
+/* SÜRE */
+
+document.querySelectorAll(".duration button")
+.forEach(button => {
+
+  button.addEventListener("click",function(){
+
+    document.querySelectorAll(".duration button")
+    .forEach(x => x.classList.remove("active"));
+
+    this.classList.add("active");
+
+    selectedDuration =
+    this.dataset.duration;
+
+  });
+
+});
+
+
+/* VİDEO */
+
+document.getElementById("generate")
+.addEventListener("click",function(){
+
+  if(!imageData){
+
+    alert("Önce bir ürün fotoğrafı seç 🍔");
+
+    return;
+
+  }
+
+  const campaign =
+  document.getElementById("campaign").value.trim();
+
+  const music =
+  document.getElementById("music").value;
+
+  const subtitle =
+  document.getElementById("subtitle").checked;
+
+  document.getElementById("videoPhoto").src =
+  imageData;
+
+
+  if(subtitle && campaign){
+
+    document.getElementById("videoText").innerText =
+    campaign;
+
+  }else{
+
+    document.getElementById("videoText").innerText =
+    "NARBURGER";
+
+  }
+
+
+  const names = {
+
+    cartoon:"Çizgi Film",
+    "3d":"3D",
+    retro:"Amerikan Retro",
+    realistic:"Gerçekçi"
+
+  };
+
+
+  document.getElementById("status").innerText =
+  names[selectedStyle] +
+  " · " +
+  selectedDuration +
+  " saniye · " +
+  "Müzik: " +
+  music;
+
+
+  document.getElementById("result").style.display =
+  "block";
+
+
+  document.getElementById("result")
+  .scrollIntoView({
+    behavior:"smooth"
+  });
+
+});
+
+</script>
+
+</body>
+</html>
