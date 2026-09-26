@@ -8,10 +8,7 @@
 <title>Narburger Cartoon Studio</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -21,366 +18,202 @@ body{
 }
 
 header{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:rgba(8,8,8,.94);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid #242424;
-  padding:16px;
+  padding:22px 18px;
+  text-align:center;
+  border-bottom:1px solid #252525;
+  background:#0d0d0d;
 }
 
-.headerInner{
-  max-width:850px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.brand{
+.logo{
+  font-size:30px;
   font-weight:900;
-  font-size:20px;
 }
 
-.brand span{
-  color:#e42525;
-}
+.logo span{color:#e62929}
 
-.version{
-  font-size:12px;
-  background:#1d1d1d;
-  padding:7px 10px;
-  border-radius:20px;
-  color:#aaa;
-}
-
-main{
-  max-width:850px;
-  margin:auto;
-  padding:22px 16px 70px;
-}
-
-.hero{
-  margin-bottom:25px;
-}
-
-.hero h1{
-  font-size:34px;
-  line-height:1.05;
-  margin:0 0 10px;
-}
-
-.hero p{
+.subtitle{
+  margin-top:5px;
   color:#999;
-  line-height:1.5;
-  margin:0;
+  font-size:13px;
+}
+
+.wrap{
+  width:min(760px,100%);
+  margin:auto;
+  padding:18px;
 }
 
 .card{
-  background:#121212;
-  border:1px solid #252525;
+  background:#141414;
+  border:1px solid #292929;
   border-radius:22px;
   padding:18px;
   margin-bottom:16px;
 }
 
-.cardTitle{
-  font-size:14px;
-  font-weight:800;
-  margin-bottom:13px;
-  color:#ddd;
+h2{
+  margin:0 0 14px;
+  font-size:18px;
 }
 
 .upload{
-  border:2px dashed #393939;
+  min-height:210px;
+  border:2px dashed #444;
   border-radius:18px;
-  padding:25px 15px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-align:center;
+  overflow:hidden;
   cursor:pointer;
+  background:#0c0c0c;
+}
+
+.upload:hover{
+  border-color:#e62929;
+}
+
+.upload img{
+  width:100%;
+  max-height:420px;
+  object-fit:contain;
+  display:none;
+}
+
+.uploadText{
+  padding:30px;
+  color:#aaa;
 }
 
 .uploadIcon{
-  font-size:35px;
-  margin-bottom:8px;
+  font-size:48px;
+  margin-bottom:10px;
 }
 
-.upload strong{
-  display:block;
-  margin-bottom:5px;
-}
-
-.upload small{
-  color:#888;
-}
-
-#photoInput{
+input[type=file]{
   display:none;
 }
 
-.preview{
-  display:none;
-  margin-top:15px;
-  position:relative;
-  overflow:hidden;
-  border-radius:18px;
-  background:#000;
-}
-
-.preview img{
-  width:100%;
-  max-height:380px;
-  object-fit:contain;
+label.title{
   display:block;
+  margin:14px 0 7px;
+  font-size:13px;
+  color:#aaa;
 }
 
 textarea{
   width:100%;
-  min-height:110px;
-  resize:none;
+  min-height:105px;
   border:1px solid #333;
-  background:#090909;
-  color:white;
-  padding:15px;
   border-radius:14px;
+  background:#0a0a0a;
+  color:white;
+  padding:14px;
   font-size:16px;
-  outline:none;
+  resize:vertical;
 }
 
-textarea:focus{
-  border-color:#e42525;
-}
-
-.options{
+.styles{
   display:grid;
   grid-template-columns:repeat(2,1fr);
-  gap:10px;
+  gap:9px;
 }
 
-.option{
+.styleBtn{
+  padding:13px 8px;
   border:1px solid #333;
-  background:#0c0c0c;
-  padding:14px 10px;
-  border-radius:14px;
-  text-align:center;
-  cursor:pointer;
+  border-radius:13px;
+  background:#0b0b0b;
+  color:#ddd;
   font-weight:700;
-  transition:.15s;
+  cursor:pointer;
 }
 
-.option.active{
-  background:#e42525;
-  border-color:#e42525;
-}
-
-.duration{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
-}
-
-.duration button{
-  border:1px solid #333;
-  background:#0c0c0c;
-  color:white;
-  border-radius:14px;
-  padding:14px;
-  font-weight:800;
-  font-size:15px;
-}
-
-.duration button.active{
-  background:#e42525;
-  border-color:#e42525;
-}
-
-select{
-  width:100%;
-  border:1px solid #333;
-  background:#090909;
-  color:white;
-  padding:15px;
-  border-radius:14px;
-  font-size:16px;
-}
-
-.toggleRow{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:8px 0;
-}
-
-.switch{
-  position:relative;
-  width:52px;
-  height:30px;
-}
-
-.switch input{
-  display:none;
-}
-
-.slider{
-  position:absolute;
-  inset:0;
-  background:#333;
-  border-radius:30px;
-  transition:.2s;
-}
-
-.slider:before{
-  content:"";
-  position:absolute;
-  width:24px;
-  height:24px;
-  left:3px;
-  top:3px;
-  border-radius:50%;
-  background:white;
-  transition:.2s;
-}
-
-.switch input:checked + .slider{
-  background:#e42525;
-}
-
-.switch input:checked + .slider:before{
-  transform:translateX(22px);
+.styleBtn.active{
+  border-color:#e62929;
+  background:#321010;
+  color:#fff;
 }
 
 .generate{
   width:100%;
   border:0;
-  border-radius:18px;
-  padding:18px;
-  font-size:18px;
+  border-radius:16px;
+  padding:17px;
+  font-size:17px;
   font-weight:900;
-  color:white;
-  background:linear-gradient(135deg,#e42525,#a90000);
-  box-shadow:0 10px 30px rgba(228,37,37,.22);
+  color:#fff;
+  background:#e62929;
+  cursor:pointer;
 }
 
-.generate:active{
-  transform:scale(.98);
-}
-
-.result{
-  display:none;
-}
-
-.videoBox{
-  width:100%;
-  max-width:390px;
-  aspect-ratio:9/16;
-  margin:15px auto;
-  background:
-    radial-gradient(circle at 50% 30%,#441010,#080808 65%);
-  border-radius:22px;
-  overflow:hidden;
-  position:relative;
-  border:1px solid #333;
-}
-
-.videoPhoto{
-  position:absolute;
-  width:82%;
-  left:9%;
-  top:23%;
-  border-radius:18px;
-  animation:burgerZoom 3s ease-in-out infinite alternate;
-}
-
-@keyframes burgerZoom{
-  from{
-    transform:scale(.9) rotate(-2deg);
-  }
-  to{
-    transform:scale(1.05) rotate(2deg);
-  }
-}
-
-.videoText{
-  position:absolute;
-  width:90%;
-  left:5%;
-  top:8%;
-  text-align:center;
-  font-size:25px;
-  font-weight:1000;
-  text-shadow:0 3px 12px #000;
-  animation:textPop 1.2s ease infinite alternate;
-}
-
-@keyframes textPop{
-  from{
-    transform:scale(.95);
-  }
-  to{
-    transform:scale(1.05);
-  }
-}
-
-.cartoonBubble{
-  position:absolute;
-  bottom:16%;
-  left:50%;
-  transform:translateX(-50%);
-  background:#fff;
-  color:#111;
-  padding:12px 18px;
-  border-radius:20px;
-  font-weight:900;
-  white-space:nowrap;
-  box-shadow:0 8px 25px rgba(0,0,0,.5);
-}
-
-.bottomLogo{
-  position:absolute;
-  bottom:5%;
-  width:100%;
-  text-align:center;
-  font-size:24px;
-  font-weight:1000;
-}
-
-.bottomLogo span{
-  color:#e42525;
+.generate:disabled{
+  opacity:.45;
+  cursor:not-allowed;
 }
 
 .status{
-  text-align:center;
-  color:#999;
-  font-size:14px;
-  margin-top:12px;
-}
-
-.steps{
-  display:flex;
-  justify-content:center;
-  gap:6px;
+  display:none;
   margin-top:15px;
+  background:#0b0b0b;
+  border-radius:14px;
+  padding:14px;
+  color:#ddd;
 }
 
-.dot{
-  width:8px;
-  height:8px;
-  background:#333;
+.loader{
+  width:20px;
+  height:20px;
+  display:inline-block;
+  border:3px solid #555;
+  border-top-color:#fff;
   border-radius:50%;
+  animation:spin .8s linear infinite;
+  vertical-align:middle;
+  margin-right:8px;
 }
 
-.dot.active{
-  background:#e42525;
+@keyframes spin{
+  to{transform:rotate(360deg)}
 }
 
-@media(min-width:700px){
-  .options{
-    grid-template-columns:repeat(4,1fr);
-  }
+#error{
+  display:none;
+  margin-top:12px;
+  color:#ff7777;
+  font-size:14px;
+  line-height:1.45;
+}
 
-  .hero h1{
-    font-size:42px;
-  }
+#resultCard{
+  display:none;
+}
+
+video{
+  width:100%;
+  border-radius:16px;
+  background:#000;
+}
+
+.small{
+  color:#777;
+  font-size:12px;
+  margin-top:10px;
+  line-height:1.5;
+}
+
+.badge{
+  display:inline-block;
+  background:#292929;
+  color:#bbb;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  margin-bottom:12px;
+}
+
+@media(max-width:520px){
+  .styles{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -388,227 +221,146 @@ select{
 <body>
 
 <header>
-  <div class="headerInner">
-    <div class="brand">
-      🍔 <span>Narburger</span> Cartoon Studio
-    </div>
-    <div class="version">V1</div>
-  </div>
+  <div class="logo">🍔 Narburger <span>Studio</span></div>
+  <div class="subtitle">AI Reklam & Cartoon Video Studio · V2</div>
 </header>
 
-<main>
+<main class="wrap">
 
-<div class="hero">
-  <h1>Fotoğrafını<br>harekete geçir. 🎬</h1>
-  <p>
-    Ürün fotoğrafını yükle, tarzını ve müziğini seç.
-    Narburger için Reels videosunu hazırla.
-  </p>
-</div>
+  <section class="card">
+    <div class="badge">1 · FOTOĞRAF</div>
+    <h2>Ürün fotoğrafını seç</h2>
 
-<div class="card">
-  <div class="cardTitle">1 · ÜRÜN FOTOĞRAFI</div>
+    <label class="upload" for="photo">
+      <div class="uploadText" id="uploadText">
+        <div class="uploadIcon">📸</div>
+        <strong>Fotoğraf Seç</strong><br>
+        <small>iPhone / iPad fotoğraf arşivinden</small>
+      </div>
 
-  <label class="upload" for="photoInput">
-    <div class="uploadIcon">📸</div>
-    <strong>Fotoğraf Seç</strong>
-    <small>iPhone / iPad Fotoğraflar uygulamasından</small>
-  </label>
-
-  <input
-    type="file"
-    id="photoInput"
-    accept="image/*"
-  >
-
-  <div class="preview" id="preview">
-    <img id="previewImage">
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="cardTitle">2 · KAMPANYA / VİDEO METNİ</div>
-
-  <textarea
-    id="campaign"
-    placeholder="Örnek: Online siparişe özel! 2. Narburger %50 indirimli. Sadece Tat."
-  ></textarea>
-</div>
-
-
-<div class="card">
-  <div class="cardTitle">3 · VİDEO TARZI</div>
-
-  <div class="options" id="styles">
-
-    <div class="option active" data-value="cartoon">
-      🎨<br>Çizgi Film
-    </div>
-
-    <div class="option" data-value="3d">
-      🧊<br>3D
-    </div>
-
-    <div class="option" data-value="retro">
-      🇺🇸<br>Retro
-    </div>
-
-    <div class="option" data-value="realistic">
-      📷<br>Gerçekçi
-    </div>
-
-  </div>
-</div>
-
-
-<div class="card">
-  <div class="cardTitle">4 · VİDEO SÜRESİ</div>
-
-  <div class="duration">
-
-    <button class="active" data-duration="15">
-      15 sn
-    </button>
-
-    <button data-duration="30">
-      30 sn
-    </button>
-
-    <button data-duration="60">
-      60 sn
-    </button>
-
-  </div>
-</div>
-
-
-<div class="card">
-
-  <div class="cardTitle">5 · MÜZİK</div>
-
-  <select id="music">
-    <option value="energetic">⚡ Enerjik</option>
-    <option value="rock">🎸 Rock</option>
-    <option value="retro">📻 Amerikan Retro</option>
-    <option value="funk">🕺 Funk</option>
-    <option value="cinematic">🎬 Sinematik</option>
-    <option value="none">🔇 Müzik Yok</option>
-  </select>
-
-</div>
-
-
-<div class="card">
-
-  <div class="toggleRow">
-
-    <div>
-      <strong>Otomatik Animasyon</strong><br>
-      <small style="color:#777">
-        Zoom, hareket ve yazı efektleri
-      </small>
-    </div>
-
-    <label class="switch">
-      <input id="animation" type="checkbox" checked>
-      <span class="slider"></span>
+      <img id="preview" alt="Önizleme">
     </label>
 
-  </div>
+    <input id="photo" type="file" accept="image/*">
+  </section>
 
-  <div class="toggleRow">
 
-    <div>
-      <strong>Altyazı</strong><br>
-      <small style="color:#777">
-        Kampanya metnini videoda göster
-      </small>
+  <section class="card">
+    <div class="badge">2 · SAHNE</div>
+    <h2>Reklam fikrini yaz</h2>
+
+    <textarea id="prompt"
+      placeholder="Örn: Burger masanın üzerinde. Kamera burgere yaklaşsın, cheddar erisin, sinematik reklam filmi gibi olsun."></textarea>
+
+    <label class="title">Video tarzı</label>
+
+    <div class="styles">
+      <button class="styleBtn active" data-style="cartoon">
+        🎨 Çizgi Film
+      </button>
+
+      <button class="styleBtn" data-style="cinematic">
+        🎬 Sinematik
+      </button>
+
+      <button class="styleBtn" data-style="retro">
+        📺 Retro Reklam
+      </button>
+
+      <button class="styleBtn" data-style="food">
+        🍔 Food Commercial
+      </button>
+    </div>
+  </section>
+
+
+  <section class="card">
+    <div class="badge">3 · ÜRET</div>
+
+    <button id="generate" class="generate">
+      🎬 VİDEO OLUŞTUR
+    </button>
+
+    <div id="status" class="status">
+      <span class="loader"></span>
+      <span id="statusText">Hazırlanıyor...</span>
     </div>
 
-    <label class="switch">
-      <input id="subtitle" type="checkbox" checked>
-      <span class="slider"></span>
-    </label>
+    <div id="error"></div>
 
-  </div>
-
-</div>
-
-
-<button class="generate" id="generate">
-  ✨ VİDEO OLUŞTUR
-</button>
-
-
-<div class="result card" id="result">
-
-  <div class="cardTitle">
-    VİDEO ÖNİZLEME · 9:16
-  </div>
-
-  <div class="videoBox">
-
-    <div class="videoText" id="videoText">
-      NARBURGER
+    <div class="small">
+      Yapay zekâ video üretimi birkaç dakika sürebilir.
+      Sayfayı üretim sırasında kapatma.
     </div>
+  </section>
 
-    <img class="videoPhoto" id="videoPhoto">
 
-    <div class="cartoonBubble" id="bubble">
-      🍔 Sadece Tat!
-    </div>
+  <section class="card" id="resultCard">
+    <div class="badge">4 · SONUÇ</div>
+    <h2>🎉 Videon hazır</h2>
 
-    <div class="bottomLogo">
-      <span>nar</span>burger
-    </div>
-
-  </div>
-
-  <div class="steps">
-    <div class="dot active"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-  </div>
-
-  <div class="status" id="status">
-    Çizgi-film animasyon önizlemesi hazır.
-  </div>
-
-</div>
+    <video id="video" controls playsinline></video>
+  </section>
 
 </main>
 
 
 <script>
 
+const API =
+  "https://narburger-video-api.ozturkhkn.workers.dev";
+
+const photo = document.getElementById("photo");
+const preview = document.getElementById("preview");
+const uploadText = document.getElementById("uploadText");
+
+const promptBox = document.getElementById("prompt");
+const generateBtn = document.getElementById("generate");
+
+const statusBox = document.getElementById("status");
+const statusText = document.getElementById("statusText");
+
+const errorBox = document.getElementById("error");
+
+const resultCard = document.getElementById("resultCard");
+const video = document.getElementById("video");
+
 let selectedStyle = "cartoon";
-let selectedDuration = 15;
-let imageData = "";
+let imageData = null;
 
 
-/* FOTOĞRAF */
+document.querySelectorAll(".styleBtn").forEach(btn => {
 
-const photoInput =
-document.getElementById("photoInput");
+  btn.addEventListener("click", () => {
 
-photoInput.addEventListener("change",function(){
+    document.querySelectorAll(".styleBtn")
+      .forEach(x => x.classList.remove("active"));
 
-  const file = this.files[0];
+    btn.classList.add("active");
+
+    selectedStyle = btn.dataset.style;
+
+  });
+
+});
+
+
+photo.addEventListener("change", () => {
+
+  const file = photo.files[0];
 
   if(!file) return;
 
   const reader = new FileReader();
 
-  reader.onload = function(e){
+  reader.onload = e => {
 
     imageData = e.target.result;
 
-    document.getElementById("previewImage").src =
-    imageData;
+    preview.src = imageData;
+    preview.style.display = "block";
 
-    document.getElementById("preview").style.display =
-    "block";
+    uploadText.style.display = "none";
 
   };
 
@@ -617,112 +369,213 @@ photoInput.addEventListener("change",function(){
 });
 
 
-/* TARZ */
+function buildPrompt(){
 
-document.querySelectorAll("#styles .option")
-.forEach(option => {
+  const userPrompt =
+    promptBox.value.trim() ||
+    "A delicious premium burger advertisement.";
 
-  option.addEventListener("click",function(){
+  const styles = {
 
-    document.querySelectorAll("#styles .option")
-    .forEach(x => x.classList.remove("active"));
+    cartoon:
+      "High quality animated cartoon commercial, playful smooth animation, professional food advertising, vibrant scene.",
 
-    this.classList.add("active");
+    cinematic:
+      "Premium cinematic food commercial, dramatic lighting, slow camera movement, shallow depth of field, highly appetizing.",
 
-    selectedStyle =
-    this.dataset.value;
+    retro:
+      "Stylish American retro burger commercial, vintage diner atmosphere, energetic advertising animation.",
 
-  });
-
-});
-
-
-/* SÜRE */
-
-document.querySelectorAll(".duration button")
-.forEach(button => {
-
-  button.addEventListener("click",function(){
-
-    document.querySelectorAll(".duration button")
-    .forEach(x => x.classList.remove("active"));
-
-    this.classList.add("active");
-
-    selectedDuration =
-    this.dataset.duration;
-
-  });
-
-});
-
-
-/* VİDEO */
-
-document.getElementById("generate")
-.addEventListener("click",function(){
-
-  if(!imageData){
-
-    alert("Önce bir ürün fotoğrafı seç 🍔");
-
-    return;
-
-  }
-
-  const campaign =
-  document.getElementById("campaign").value.trim();
-
-  const music =
-  document.getElementById("music").value;
-
-  const subtitle =
-  document.getElementById("subtitle").checked;
-
-  document.getElementById("videoPhoto").src =
-  imageData;
-
-
-  if(subtitle && campaign){
-
-    document.getElementById("videoText").innerText =
-    campaign;
-
-  }else{
-
-    document.getElementById("videoText").innerText =
-    "NARBURGER";
-
-  }
-
-
-  const names = {
-
-    cartoon:"Çizgi Film",
-    "3d":"3D",
-    retro:"Amerikan Retro",
-    realistic:"Gerçekçi"
+    food:
+      "Professional modern fast food commercial, delicious burger hero shot, smooth camera movement, appetizing food photography."
 
   };
 
+  return `${styles[selectedStyle]} ${userPrompt}
+Keep the burger recognizable and realistic.
+No distorted food. No unwanted text or logos.`;
 
-  document.getElementById("status").innerText =
-  names[selectedStyle] +
-  " · " +
-  selectedDuration +
-  " saniye · " +
-  "Müzik: " +
-  music;
+}
 
 
-  document.getElementById("result").style.display =
-  "block";
+function sleep(ms){
+  return new Promise(resolve => setTimeout(resolve,ms));
+}
 
 
-  document.getElementById("result")
-  .scrollIntoView({
-    behavior:"smooth"
-  });
+async function checkStatus(id){
+
+  for(let i=0;i<120;i++){
+
+    statusText.textContent =
+      `Video hazırlanıyor... ${i+1}`;
+
+    const response =
+      await fetch(
+        `${API}/status?id=${encodeURIComponent(id)}`
+      );
+
+    const data = await response.json();
+
+    if(!response.ok)
+      throw new Error(
+        data.error || "Durum kontrolü başarısız."
+      );
+
+    if(
+      data.status === "COMPLETED" ||
+      data.status === "completed"
+    ){
+      return;
+    }
+
+    if(
+      data.status === "FAILED" ||
+      data.status === "failed"
+    ){
+      throw new Error("Video üretimi başarısız oldu.");
+    }
+
+    await sleep(5000);
+
+  }
+
+  throw new Error(
+    "Video üretimi beklenenden uzun sürdü."
+  );
+
+}
+
+
+function findVideoURL(data){
+
+  return (
+    data?.video?.url ||
+    data?.video_url ||
+    data?.output?.video?.url ||
+    data?.data?.video?.url ||
+    null
+  );
+
+}
+
+
+generateBtn.addEventListener("click", async () => {
+
+  errorBox.style.display = "none";
+  resultCard.style.display = "none";
+
+  if(!imageData){
+
+    errorBox.textContent =
+      "Önce bir ürün fotoğrafı seç.";
+
+    errorBox.style.display = "block";
+
+    return;
+  }
+
+  generateBtn.disabled = true;
+  statusBox.style.display = "block";
+
+  try{
+
+    statusText.textContent =
+      "Video isteği gönderiliyor...";
+
+    const response = await fetch(
+      `${API}/generate`,
+      {
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+          image_url:imageData,
+          prompt:buildPrompt()
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if(!response.ok){
+      throw new Error(
+        data.detail ||
+        data.error ||
+        "Video isteği gönderilemedi."
+      );
+    }
+
+    const requestId =
+      data.request_id ||
+      data.requestId;
+
+    if(!requestId){
+      throw new Error(
+        "fal.ai request_id döndürmedi."
+      );
+    }
+
+    await checkStatus(requestId);
+
+    statusText.textContent =
+      "Video alınıyor...";
+
+    const resultResponse =
+      await fetch(
+        `${API}/result?id=${encodeURIComponent(requestId)}`
+      );
+
+    const result =
+      await resultResponse.json();
+
+    if(!resultResponse.ok){
+      throw new Error(
+        result.error ||
+        "Video sonucu alınamadı."
+      );
+    }
+
+    const videoURL =
+      findVideoURL(result);
+
+    if(!videoURL){
+      console.log(result);
+
+      throw new Error(
+        "Video üretildi ancak video adresi bulunamadı."
+      );
+    }
+
+    video.src = videoURL;
+
+    resultCard.style.display = "block";
+
+    statusBox.style.display = "none";
+
+    resultCard.scrollIntoView({
+      behavior:"smooth"
+    });
+
+  }
+  catch(error){
+
+    statusBox.style.display = "none";
+
+    errorBox.textContent =
+      "⚠️ " + error.message;
+
+    errorBox.style.display = "block";
+
+  }
+  finally{
+
+    generateBtn.disabled = false;
+
+  }
 
 });
 
