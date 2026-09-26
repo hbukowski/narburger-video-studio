@@ -373,30 +373,60 @@ function buildPrompt(){
 
   const userPrompt =
     promptBox.value.trim() ||
-    "A delicious premium burger advertisement.";
+    "Create a professional Narburger advertisement.";
 
-  const styles = {
+  const noVoice =
+    "No dialogue. No speech. No voice. No narration. No talking. No subtitles. No unwanted text.";
 
-    cartoon:
-      "High quality animated cartoon commercial, playful smooth animation, professional food advertising, vibrant scene.",
+  if(selectedStyle === "cartoon"){
+    return `
+Transform the uploaded food photo into a high quality animated cartoon commercial.
+Create a polished, fun, professional 3D animated advertising style.
+Keep the original food clearly recognizable.
+Preserve the main ingredients and composition.
+Use smooth cinematic animation and playful camera movement.
+Do not create grotesque, melted or deformed food.
+${userPrompt}
+${noVoice}
+`;
+  }
 
-    cinematic:
-      "Premium cinematic food commercial, dramatic lighting, slow camera movement, shallow depth of field, highly appetizing.",
+  if(selectedStyle === "cinematic"){
+    return `
+Keep the original food exactly recognizable.
+Preserve the bread, meat, cheese, fries, ingredients, shape and proportions.
+Create a premium cinematic food commercial.
+Use dramatic professional lighting, shallow depth of field and very smooth camera movement.
+No morphing or deformation.
+Photorealistic and appetizing.
+${userPrompt}
+${noVoice}
+`;
+  }
 
-    retro:
-      "Stylish American retro burger commercial, vintage diner atmosphere, energetic advertising animation.",
+  if(selectedStyle === "retro"){
+    return `
+Create a stylish American retro fast-food commercial.
+Keep the original food recognizable and preserve its ingredients and proportions.
+Use a classic diner advertising atmosphere with tasteful vintage camera movement.
+Do not deform or morph the food.
+${userPrompt}
+${noVoice}
+`;
+  }
 
-    food:
-      "Professional modern fast food commercial, delicious burger hero shot, smooth camera movement, appetizing food photography."
-
-  };
-
-  return `${styles[selectedStyle]} ${userPrompt}
-Keep the burger recognizable and realistic.
-No distorted food. No unwanted text or logos.`;
-
+  return `
+Keep the original food exactly unchanged.
+Do not alter the bread, meat, cheese, fries, ingredients, shape or proportions.
+No morphing or deformation.
+Create a premium professional food commercial.
+Only use very slow, smooth cinematic camera movement.
+Add subtle natural steam only when appropriate.
+Realistic lighting, appetizing and photorealistic.
+${userPrompt}
+${noVoice}
+`;
 }
-
 
 function sleep(ms){
   return new Promise(resolve => setTimeout(resolve,ms));
