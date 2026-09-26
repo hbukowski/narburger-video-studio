@@ -300,6 +300,7 @@ video{
     <h2>🎉 Videon hazır</h2>
 
     <video id="video" controls playsinline></video>
+    <a id="downloadBtn" download="narburger-video.mp4" style="display:block;margin-top:14px;padding:15px;text-align:center;background:#e62929;color:white;border-radius:14px;font-weight:900;text-decoration:none;">⬇️ VİDEOYU İNDİR</a>
   </section>
 
 </main>
@@ -581,7 +582,7 @@ generateBtn.addEventListener("click", async () => {
     }
 
     video.src = videoURL;
-
+document.getElementById("downloadBtn").href = videoURL;
     resultCard.style.display = "block";
 
     statusBox.style.display = "none";
